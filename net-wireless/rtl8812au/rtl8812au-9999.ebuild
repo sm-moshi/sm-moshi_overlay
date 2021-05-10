@@ -14,23 +14,22 @@ SLOT="0"
 KEYWORDS=""
 
 MODULE_NAMES="8812au(net/wireless)"
-BUILD_TARGETS="all"
+BUILD_TARGETS="modules"
 BUILD_TARGET_ARCH="${ARCH}"
-BUILD_PARAMS="KERN_DIR=${KV_DIR} KSRC=${KV_DIR} KERN_VER=${KV_FULL} O=${KV_OUT_DIR} V=1 KBUILD_VERBOSE=1"
 
-#pkg_setup() {
-#	linux-mod_pkg_setup
-#	
-#}
+pkg_setup() {
+	linux-mod_pkg_setup
+	BUILD_PARAMS="KERN_DIR=${KV_DIR} KSRC=${KV_DIR} KERN_VER=${KV_FULL} O=${KV_OUT_DIR} V=1 KBUILD_VERBOSE=1"
+}
 
-#src_compile(){
-#	linux-mod_src_compile
-#}
+src_compile(){
+	linux-mod_src_compile
+}
 
-#src_install() {
-#	linux-mod_src_install
-#}
+src_install() {
+	linux-mod_src_install
+}
 
-#pkg_postinst() {
-#	linux-mod_pkg_postinst
-#}
+pkg_postinst() {
+	linux-mod_pkg_postinst
+}

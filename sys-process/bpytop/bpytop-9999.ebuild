@@ -3,10 +3,9 @@
 
 EAPI=7
 
-inherit python-r1 distutils-r1 git-r3
-
-PYTHON_COMPAT=(python3_9)
+PYTHON_COMPAT=( python3_{7..9} )
 DISTUTILS_USE_SETUPTOOLS=pyproject.toml
+inherit distutils-r1 git-r3
 
 DESCRIPTION="Linux/OSX/FreeBSD resource monitor"
 HOMEPAGE="https://github.com/aristocratos/bpytop"
@@ -14,7 +13,7 @@ EGIT_REPO_URI="https://github.com/aristocratos/bpytop.git"
 
 LICENSE="Apache-2.0"
 SLOT="0"
-KEYWORDS=""
+KEYWORDS="~amd64 ~x86"
 IUSE="test"
 
 RDEPEND="
@@ -22,6 +21,10 @@ RDEPEND="
 "
 
 distutils_enable_tests pytest
+
+#PATCHES=(
+#	"${FILESDIR}/bpytop-1.0.63-tests.patch"
+#)
 
 src_install() {
 	insinto "/usr/share/${PN}/themes"

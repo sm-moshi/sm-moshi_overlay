@@ -3,9 +3,9 @@
 
 EAPI=7
 
-inherit distutils-r1 git-r3
+inherit python-r1 distutils-r1 git-r3
 
-PYTHON_COMPAT=( python3_{7..9} )
+PYTHON_COMPAT=(python3_9)
 DISTUTILS_USE_SETUPTOOLS=pyproject.toml
 
 DESCRIPTION="Linux/OSX/FreeBSD resource monitor"

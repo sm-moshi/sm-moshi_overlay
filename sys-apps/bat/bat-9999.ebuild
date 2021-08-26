@@ -150,7 +150,7 @@ CRATES="
 	yaml-rust-0.4.5
 "
 
-inherit cargo distutils-r1 git-r3
+inherit cargo git-r3
 
 DESCRIPTION="cat(1) clone with syntax highlighting and Git integration"
 # Double check the homepage as the cargo_metadata crate

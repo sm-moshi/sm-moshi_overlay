@@ -3,7 +3,7 @@
 
 EAPI=7
 
-PYTHON_COMPAT=(python3_9)
+PYTHON_COMPAT=(python3_10)
 DISTUTILS_USE_SETUPTOOLS=pyproject.toml
 inherit distutils-r1 git-r3
 
@@ -17,7 +17,7 @@ KEYWORDS="~amd64 ~x86"
 IUSE="test"
 
 RDEPEND="
-	>=dev-python/psutil-5.7.1[${PYTHON_USEDEP}]
+	>=dev-python/psutil-5.7.3[${PYTHON_USEDEP}]
 "
 
 distutils_enable_tests pytest

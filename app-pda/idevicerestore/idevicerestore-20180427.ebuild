@@ -11,7 +11,7 @@ EGIT_REPO_URI="https://github.com/libimobiledevice/idevicerestore.git"
 
 LICENSE="GPL-2 LGPL-2.1"
 SLOT="0"
-KEYWORDS="~AMD64"
+KEYWORDS="~amd64"
 
 RDEPEND="app-pda/libirecovery:0=
 		>=app-pda/libimobiledevice-1.1.6:0=

@@ -9,7 +9,7 @@ DESCRIPTION="Realtek 8812AU USB WiFi module for Linux kernel"
 HOMEPAGE="https://github.com/gnab/rtl8812au"
 EGIT_REPO_URI="https://github.com/gnab/rtl8812au.git"
 
-LICENSE=""
+LICENSE="*"
 SLOT="0"
 KEYWORDS=""
 

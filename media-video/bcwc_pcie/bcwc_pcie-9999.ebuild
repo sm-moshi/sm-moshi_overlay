@@ -12,7 +12,7 @@ SRC_URI=""
 
 EGIT_REPO_URI="https://github.com/patjak/bcwc_pcie"
 
-LICENSE=""
+LICENSE="GPL-2.0"
 SLOT="0"
 KEYWORDS="~amd64"
 

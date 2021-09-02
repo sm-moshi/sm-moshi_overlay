@@ -8,7 +8,7 @@ DESCRIPTION="Firmware for the Apple Facetime HD Camera"
 HOMEPAGE=""
 SRC_URI=""
 
-LICENSE=""
+LICENSE="*"
 SLOT="0"
 KEYWORDS="~amd64"
 IUSE=""

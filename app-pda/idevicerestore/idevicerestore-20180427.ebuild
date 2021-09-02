@@ -13,12 +13,12 @@ LICENSE="GPL-2 LGPL-2.1"
 SLOT="0"
 KEYWORDS="~amd64"
 
-RDEPEND="app-pda/libirecovery:0=
-		>=app-pda/libimobiledevice-1.1.6:0=
-		app-pda/libplist:0=
-		>=dev-libs/libzip-0.8.0
-		>=net-misc/curl-7.0.0
-		dev-libs/openssl:0="
+RDEPEND="app-pda/libirecovery
+		app-pda/libimobiledevice
+		app-pda/libplist
+		dev-libs/libzip
+		net-misc/curl
+		dev-libs/openssl"
 DEPEND="${RDEPEND}
 		virtual/pkgconfig"
 BDEPEND=""

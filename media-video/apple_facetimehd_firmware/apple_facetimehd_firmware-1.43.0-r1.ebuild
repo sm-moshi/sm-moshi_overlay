@@ -12,7 +12,7 @@ LICENSE="*"
 SLOT="0"
 KEYWORDS="~amd64"
 IUSE=""
-RESTRICT="network-sandbox"
+#RESTRICT="network-sandbox"
 
 DEPEND="
         app-arch/cpio

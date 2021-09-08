@@ -14,7 +14,7 @@ LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64"
 
-PATCHES=( "${FILESDIR}/${P}-makefile.patch" )
+#PATCHES=( "${FILESDIR}/${P}-makefile.patch" )
 
 src_prepare() {
 	default

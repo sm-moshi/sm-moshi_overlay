@@ -7,7 +7,7 @@ inherit desktop pax-utils unpacker xdg
 
 DESCRIPTION="Cisco's packet tracer"
 HOMEPAGE="https://www.netacad.com/portal/resources/packet-tracer"
-SRC_URI="PacketTracer_801_amd64_build212_final.deb"
+SRC_URI="CiscoPacketTracer_801_Ubuntu_64bit.deb"
 
 LICENSE="Cisco"
 SLOT="0"

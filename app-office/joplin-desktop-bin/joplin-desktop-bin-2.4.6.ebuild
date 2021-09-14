@@ -10,7 +10,7 @@ HOMEPAGE="https://https://joplinapp.org//"
 
 KEYWORDS="~amd64"
 
-SRC_URI="amd64? ( https://github.com/laurent22/joplin/releases/download/v${PV}/Joplin-${PV}.AppImage )"
+SRC_URI="https://github.com/laurent22/joplin/releases/download/v${PV}/Joplin-${PV}.AppImage"
 
 SLOT="0"
 RESTRICT="strip mirror"

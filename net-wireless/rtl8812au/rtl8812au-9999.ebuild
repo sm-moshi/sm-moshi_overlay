@@ -1,5 +1,5 @@
-# Copyright 2021 sm-moshi
-# Distributed under the terms of the GNU General Public License v3
+# Copyright 1999-2021 Gentoo Authors
+# Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
 
@@ -9,7 +9,7 @@ DESCRIPTION="Realtek 8812AU USB WiFi module for Linux kernel"
 HOMEPAGE="https://github.com/gnab/rtl8812au"
 EGIT_REPO_URI="https://github.com/gnab/rtl8812au.git"
 
-LICENSE="*"
+LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS=""
 

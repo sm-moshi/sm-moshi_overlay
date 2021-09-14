@@ -44,6 +44,10 @@ BDEPEND="
 	virtual/pkgconfig
 "
 
+PATCHES=(
+	"${FILESDIR}"/${PN}-gcc11.patch
+	)
+
 src_configure() {
 	local myqmakeargs=(
 		"CONFIG+=debug"

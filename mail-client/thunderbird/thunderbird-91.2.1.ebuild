@@ -79,19 +79,19 @@ BDEPEND="${PYTHON_DEPS}
 	>=virtual/rust-1.51.0
 	|| (
 		(
-			sys-devel/clang:13
-			sys-devel/llvm:13
+			sys-devel/clang:12
+			sys-devel/llvm:12
 			clang? (
-				=sys-devel/lld-13*
-				pgo? ( =sys-libs/compiler-rt-sanitizers-13*[profile] )
+				=sys-devel/lld-12*
+				pgo? ( =sys-libs/compiler-rt-sanitizers-12*[profile] )
 			)
 		)
 		(
-			sys-devel/clang:13
-			sys-devel/llvm:13
+			sys-devel/clang:12
+			sys-devel/llvm:12
 			clang? (
-				=sys-devel/lld-13*
-				pgo? ( =sys-libs/compiler-rt-sanitizers-13*[profile] )
+				=sys-devel/lld-12*
+				pgo? ( =sys-libs/compiler-rt-sanitizers-12*[profile] )
 			)
 		)
 	)
@@ -987,7 +987,7 @@ src_configure() {
 
 	mozconfig_add_options_ac '' --disable-memory-sanitizer
 	mozconfig_add_options_ac '' --disable-mobile-optimize
-	
+
 	mozconfig_add_options_ac '' --disable-necko-wifi
 
 	mozconfig_add_options_ac '' --disable-parental-controls
@@ -1105,7 +1105,7 @@ src_install() {
 	insinto "${MOZILLA_FIVE_HOME}/distribution"
 	newins "${FILESDIR}"/distribution.ini distribution.ini
 	#######
-	if use privacy; then 
+	if use privacy; then
 		newins "${FILESDIR}"/enable-privacy.policy.json policies.json
 	else
 		newins "${FILESDIR}"/disable-auto-update.policy.json policies.json

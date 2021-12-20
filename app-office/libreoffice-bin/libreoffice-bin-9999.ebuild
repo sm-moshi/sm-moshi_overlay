@@ -7,7 +7,7 @@ inherit eutils
 
 DESCRIPTION="A full office productivity suite. Binary package"
 HOMEPAGE="https://www.libreoffice.org"
-SRC_URI="https://libreoffice.soluzioniopen.com/stable/full/LibreOffice-fresh.full-x86_64.AppImage"
+SRC_URI="https://libreoffice.soluzioniopen.com/daily/86/LibreOfficeDev-daily-x86_64.AppImage"
 
 LICENSE="LGPL-3"
 SLOT="0"

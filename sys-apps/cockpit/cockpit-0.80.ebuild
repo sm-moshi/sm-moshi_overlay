@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
+EAPI=7
 
 inherit user pam autotools eutils
 
@@ -61,10 +61,10 @@ src_prepare() {
 
 src_configure() {
 	local myconf=(
-		$(use_enable maintainer-mode) 
-		$(use_enable debug) 
-		$(use_enable pcp) 
-		$(use_enable doc) 
+		$(use_enable maintainer-mode)
+		$(use_enable debug)
+		$(use_enable pcp)
+		$(use_enable doc)
 		"--with-pamdir=/lib64/security "
 		"--with-cockpit-user=cockpit-ws "
 		"--with-cockpit-group=cockpit-ws"

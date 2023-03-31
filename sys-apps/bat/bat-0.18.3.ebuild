@@ -176,7 +176,7 @@ RDEPEND="${DEPEND}
 	!>app-backup/bacula-9.2[qt5]
 "
 
-DOCS=( README.md doc/alternatives.md )
+DOCS=(README.md doc/alternatives.md)
 
 QA_FLAGS_IGNORED="/usr/bin/bat"
 

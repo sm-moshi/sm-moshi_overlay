@@ -1,7 +1,9 @@
-# Copyright 2021-2022 Gentoo Authors
+# Copyright 2021-2023 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
+
+inherit toolchain-funcs
 
 DESCRIPTION="A monitor of resources"
 HOMEPAGE="https://github.com/aristocratos/btop"
@@ -26,7 +28,9 @@ src_prepare() {
 src_compile() {
 	# Disable btop optimization flags, since we have our flags in CXXFLAGS
 	emake \
-		OPTFLAGS=""
+		CXX="$(tc-getCXX)" \
+		OPTFLAGS="${CXXFLAGS}" \
+		ADDFLAGS="${LDFLAGS}"
 }
 
 src_install() {
@@ -35,5 +39,7 @@ src_install() {
 		DESTDIR="${D}" \
 		install
 
-	dodoc README.md CHANGELOG.md
+	DOCS=(*.md)
+	einstalldocs
+	rm -f "${D}/${EPREFIX}/usr/share/btop/README.md"
 }

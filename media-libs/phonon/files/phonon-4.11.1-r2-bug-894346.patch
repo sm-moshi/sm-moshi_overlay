@@ -1,0 +1,54 @@
+https://bugs.gentoo.org/894346
+https://invent.kde.org/libraries/phonon/-/merge_requests/16
+
+From 069d5a3eb81bcbc730e44c27a0d060a85cf9213d Mon Sep 17 00:00:00 2001
+From: Dimitry Andric <dimitry@andric.com>
+Date: Sun, 16 Jul 2023 15:17:39 +0200
+Subject: [PATCH] Future-proof build fix for clang > 16
+
+Clang is intending to remove the `-Wno-enum-constexpr-conversion` flag
+in the future, because it can invoke undefined behavior.
+
+To avoid the "integer value NNNN is outside the valid range of values
+[0, 7] for the enumeration type 'ObjectDescriptionType'" warnings,
+explicitly specify that the `ObjectDescriptionType` enum uses `unsigned`
+as the underlying type.
+
+This also allows to remove the CMake patch that added the
+`-Wno-enum-constexpr-conversion` flag.
+---
+ phonon/experimental/CMakeLists.txt | 4 ----
+ phonon/objectdescription.h         | 2 +-
+ 2 files changed, 1 insertion(+), 5 deletions(-)
+
+diff --git a/phonon/experimental/CMakeLists.txt b/phonon/experimental/CMakeLists.txt
+index 2401e6d30..5ee289ea7 100644
+--- a/phonon/experimental/CMakeLists.txt
++++ b/phonon/experimental/CMakeLists.txt
+@@ -34,10 +34,6 @@ set_target_properties(${PHONON_LIB_SONAME}experimental
+         DEFINE_SYMBOL MAKE_PHONONEXPERIMENTAL_LIB
+ )
+ install(TARGETS ${PHONON_LIB_SONAME}experimental EXPORT PhononExperimentalLibs${QT_MAJOR_VERSION} ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
+-if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+-    # We intentionally cast incorrect values into the ObjectDescriptionType enum for experimental types.
+-    target_compile_options(${PHONON_LIB_SONAME}experimental PRIVATE "-Wno-enum-constexpr-conversion")
+-endif()
+ target_include_directories(${PHONON_LIB_SONAME}experimental
+     INTERFACE "$<INSTALL_INTERFACE:${INCLUDE_INSTALL_DIR}>")
+ 
+diff --git a/phonon/objectdescription.h b/phonon/objectdescription.h
+index 97fec2e79..6ce92de54 100644
+--- a/phonon/objectdescription.h
++++ b/phonon/objectdescription.h
+@@ -43,7 +43,7 @@ namespace Phonon
+      *
+      * \ingroup Backend
+      */
+-    enum ObjectDescriptionType
++    enum ObjectDescriptionType : unsigned
+     {
+         /**
+          * Audio output devices. This can be soundcards (with different drivers), soundservers or
+-- 
+GitLab
+

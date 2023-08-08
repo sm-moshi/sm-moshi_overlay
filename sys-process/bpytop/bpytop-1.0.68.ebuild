@@ -3,8 +3,9 @@
 
 EAPI=8
 
+DISTUTILS_USE_PEP517=poetry
 PYTHON_COMPAT=(python3_{10..12})
-DISTUTILS_USE_PEP517=pyproject.toml
+
 inherit distutils-r1
 
 DESCRIPTION="Linux/OSX/FreeBSD resource monitor"

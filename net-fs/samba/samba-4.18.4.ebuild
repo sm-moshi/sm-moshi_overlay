@@ -3,7 +3,7 @@
 
 EAPI=8
 
-PYTHON_COMPAT=( python3_{10..11} )
+PYTHON_COMPAT=(python3_{9..11})
 PYTHON_REQ_USE="threads(+),xml(+)"
 inherit python-single-r1 flag-o-matic waf-utils multilib-minimal linux-info systemd pam tmpfiles
 
@@ -124,7 +124,7 @@ DEPEND="${COMMON_DEPEND}
 	spotlight? ( dev-libs/glib )
 	test? (
 		>=dev-util/cmocka-1.1.3[${MULTILIB_USEDEP}]
-		$(python_gen_cond_dep "dev-python/subunit[\${PYTHON_USEDEP},${MULTILIB_USEDEP}]" )
+		$(python_gen_cond_dep "dev-python/subunit[\${PYTHON_USEDEP},${MULTILIB_USEDEP}]")
 		!system-mitkrb5? (
 			>=net-dns/resolv_wrapper-1.1.4
 			>=net-libs/socket_wrapper-1.1.9
@@ -161,30 +161,30 @@ pkg_setup() {
 	python-single-r1_pkg_setup
 
 	SHAREDMODS="$(usev !snapper '!')vfs_snapper"
-	if use cluster ; then
+	if use cluster; then
 		SHAREDMODS+=",idmap_rid,idmap_tdb2,idmap_ad"
-	elif use ads ; then
+	elif use ads; then
 		SHAREDMODS+=",idmap_ad"
 	fi
 }
 
 check_samba_dep_versions() {
 	actual_talloc_version=$(sed -En '/^VERSION =/{s/[^0-9.]//gp}' lib/talloc/wscript || die)
-	if [[ ${actual_talloc_version} != ${TALLOC_VERSION} ]] ; then
+	if [[ ${actual_talloc_version} != ${TALLOC_VERSION} ]]; then
 		eerror "Source talloc version: ${TALLOC_VERSION}"
 		eerror "Ebuild talloc version: ${actual_talloc_version}"
 		die "Ebuild needs to fix TALLOC_VERSION!"
 	fi
 
 	actual_tdb_version=$(sed -En '/^VERSION =/{s/[^0-9.]//gp}' lib/tdb/wscript || die)
-	if [[ ${actual_tdb_version} != ${TDB_VERSION} ]] ; then
+	if [[ ${actual_tdb_version} != ${TDB_VERSION} ]]; then
 		eerror "Source tdb version: ${TDB_VERSION}"
 		eerror "Ebuild tdb version: ${actual_tdb_version}"
 		die "Ebuild needs to fix TDB_VERSION!"
 	fi
 
 	actual_tevent_version=$(sed -En '/^VERSION =/{s/[^0-9.]//gp}' lib/tevent/wscript || die)
-	if [[ ${actual_tevent_version} != ${TEVENT_VERSION} ]] ; then
+	if [[ ${actual_tevent_version} != ${TEVENT_VERSION} ]]; then
 		eerror "Source tevent version: ${TEVENT_VERSION}"
 		eerror "Ebuild tevent version: ${actual_tevent_version}"
 		die "Ebuild needs to fix TEVENT_VERSION!"
@@ -200,7 +200,7 @@ src_prepare() {
 	sed -i -e '/"dns.resolver":/d' "${S}"/third_party/wscript || die
 
 	# Unbundle iso8601 unless tests are enabled
-	if ! use test ; then
+	if ! use test; then
 		sed -i -e '/"iso8601":/d' "${S}"/third_party/wscript || die
 	fi
 
@@ -208,8 +208,8 @@ src_prepare() {
 	#cp /usr/include/tevent_internal.h "${S}"/lib/tevent/ || die
 
 	sed -e 's:<gpgme\.h>:<gpgme/gpgme.h>:' \
-		-i source4/dsdb/samdb/ldb_modules/password_hash.c \
-		|| die
+		-i source4/dsdb/samdb/ldb_modules/password_hash.c ||
+		die
 
 	# WAF
 	multilib_copy_sources
@@ -219,33 +219,33 @@ multilib_src_configure() {
 	# When specifying libs for samba build you must append NONE to the end to
 	# stop it automatically including things
 	local bundled_libs="NONE"
-	if ! use system-heimdal && ! use system-mitkrb5 ; then
+	if ! use system-heimdal && ! use system-mitkrb5; then
 		bundled_libs="heimbase,heimntlm,hdb,kdc,krb5,wind,gssapi,hcrypto,hx509,roken,asn1,com_err,NONE"
 	fi
 
 	# We "use" bundled cmocka when we're not running tests as we're
 	# not using it anyway. Means we avoid making users install it for
 	# no reason. bug #802531
-	if ! use test ; then
+	if ! use test; then
 		bundled_libs="cmocka,${bundled_libs}"
 	fi
 
 	# bug #874633
-	if use llvm-libunwind ; then
+	if use llvm-libunwind; then
 		mkdir -p "${T}"/${ABI}/pkgconfig || die
 
 		local -x PKG_CONFIG_PATH="${T}/${ABI}/pkgconfig:${PKG_CONFIG_PATH}"
 
-		cat <<-EOF > "${T}"/${ABI}/pkgconfig/libunwind-generic.pc || die
-		exec_prefix=\${prefix}
-		libdir=/usr/$(get_libdir)
-		includedir=\${prefix}/include
+		cat <<-EOF >"${T}"/${ABI}/pkgconfig/libunwind-generic.pc || die
+			exec_prefix=\${prefix}
+			libdir=/usr/$(get_libdir)
+			includedir=\${prefix}/include
 
-		Name: libunwind-generic
-		Description: libunwind generic library
-		Version: 1.70
-		Libs: -L\${libdir} -lunwind
-		Cflags: -I\${includedir}
+			Name: libunwind-generic
+			Description: libunwind generic library
+			Version: 1.70
+			Libs: -L\${libdir} -lunwind
+			Cflags: -I\${includedir}
 		EOF
 	fi
 
@@ -297,10 +297,10 @@ multilib_src_configure() {
 		--jobs 1
 	)
 
-	if multilib_is_native_abi ; then
-		myconf+=( --with-shared-modules=${SHAREDMODS} )
+	if multilib_is_native_abi; then
+		myconf+=(--with-shared-modules=${SHAREDMODS})
 	else
-		myconf+=( --with-shared-modules=DEFAULT,!vfs_snapper )
+		myconf+=(--with-shared-modules=DEFAULT,!vfs_snapper)
 	fi
 
 	append-cppflags "-I${ESYSROOT}/usr/include/et"
@@ -313,7 +313,7 @@ multilib_src_compile() {
 }
 
 multilib_src_test() {
-	if multilib_is_native_abi ; then
+	if multilib_is_native_abi; then
 		"${WAF_BINARY}" test || die "Test failed"
 	fi
 }
@@ -329,15 +329,15 @@ multilib_src_install() {
 	# Remove empty runtime dirs created by build system (bug #892341)
 	find "${ED}"/{run,var} -type d -empty -delete || die
 
-	if multilib_is_native_abi ; then
+	if multilib_is_native_abi; then
 		# Install ldap schema for server (bug #491002)
-		if use ldap ; then
+		if use ldap; then
 			insinto /etc/openldap/schema
 			doins examples/LDAP/samba.schema
 		fi
 
 		# Create symlink for cups (bug #552310)
-		if use cups ; then
+		if use cups; then
 			dosym ../../../bin/smbspool \
 				/usr/libexec/cups/backend/smb
 		fi
@@ -360,9 +360,9 @@ multilib_src_install() {
 		newconfd "${CONFDIR}/samba4.confd" samba
 
 		dotmpfiles "${FILESDIR}"/samba.conf
-		if ! use addc ; then
-			rm "${D}/$(systemd_get_systemunitdir)/samba.service" \
-				|| die
+		if ! use addc; then
+			rm "${D}/$(systemd_get_systemunitdir)/samba.service" ||
+				die
 		fi
 
 		# Preserve functionality for old gentoo-specific unit names
@@ -371,7 +371,7 @@ multilib_src_install() {
 		dosym winbind.service "$(systemd_get_systemunitdir)/winbindd.service"
 	fi
 
-	if use pam && use winbind ; then
+	if use pam && use winbind; then
 		newpamd "${CONFDIR}/system-auth-winbind.pam" system-auth-winbind
 		# bugs #376853 and #590374
 		insinto /etc/security

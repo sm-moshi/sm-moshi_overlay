@@ -4,7 +4,7 @@
 EAPI=7
 
 DISTUTILS_OPTIONAL=1
-PYTHON_COMPAT=( python3_{8,9,10} )
+PYTHON_COMPAT=(python3_{9..11})
 
 inherit autotools bash-completion-r1 dist-kernel-utils distutils-r1 flag-o-matic linux-info pam systemd udev usr-ldscript
 
@@ -60,7 +60,7 @@ BDEPEND="virtual/awk
 	)
 "
 
-if [[ ${PV} != "9999" ]] ; then
+if [[ ${PV} != "9999" ]]; then
 	BDEPEND+=" verify-sig? ( sec-keys/openpgp-keys-openzfs )"
 fi
 
@@ -143,8 +143,8 @@ libsoversion_check() {
 	local bugurl libzfs_sover
 	bugurl="https://bugs.gentoo.org/enter_bug.cgi?form_name=enter_bug&product=Gentoo+Linux&component=Current+packages"
 
-	libzfs_sover="$(grep 'libzfs_la_LDFLAGS += -version-info' lib/libzfs/Makefile.am \
-		| grep -Eo '[0-9]+:[0-9]+:[0-9]+')"
+	libzfs_sover="$(grep 'libzfs_la_LDFLAGS += -version-info' lib/libzfs/Makefile.am |
+		grep -Eo '[0-9]+:[0-9]+:[0-9]+')"
 	libzfs_sover="${libzfs_sover%%:*}"
 
 	if [[ ${libzfs_sover} -ne $(ver_cut 2 ${SLOT}) ]]; then
@@ -158,7 +158,7 @@ libsoversion_check() {
 		echo
 		# we want to abort for releases, but just print a warning for live ebuild
 		# to keep package installable
-		[[  ${PV} == "9999" ]] || die
+		[[ ${PV} == "9999" ]] || die
 	fi
 }
 
@@ -234,9 +234,9 @@ src_install() {
 
 	gen_usr_ldscript -a nvpair uutil zfsbootenv zfs zfs_core zpool
 
-	use pam && { rm -rv "${ED}/unwanted_files" || die ; }
+	use pam && { rm -rv "${ED}/unwanted_files" || die; }
 
-	use test-suite || { rm -r "${ED}"/usr/share/zfs/{test-runner,zfs-tests,runfiles,*sh} || die ; }
+	use test-suite || { rm -r "${ED}"/usr/share/zfs/{test-runner,zfs-tests,runfiles,*sh} || die; }
 
 	find "${ED}" -name '*.la' -delete || die
 
@@ -285,13 +285,13 @@ pkg_postinst() {
 		einfo "Please refer to ${EROOT}/$(systemd_get_systempresetdir)/50-zfs.preset"
 		einfo "for default zfs systemd service configuration"
 	else
-		[[ -e "${EROOT}/etc/runlevels/boot/zfs-import" ]] || \
+		[[ -e "${EROOT}/etc/runlevels/boot/zfs-import" ]] ||
 			einfo "You should add zfs-import to the boot runlevel."
-		[[ -e "${EROOT}/etc/runlevels/boot/zfs-mount" ]]|| \
+		[[ -e "${EROOT}/etc/runlevels/boot/zfs-mount" ]] ||
 			einfo "You should add zfs-mount to the boot runlevel."
-		[[ -e "${EROOT}/etc/runlevels/default/zfs-share" ]] || \
+		[[ -e "${EROOT}/etc/runlevels/default/zfs-share" ]] ||
 			einfo "You should add zfs-share to the default runlevel."
-		[[ -e "${EROOT}/etc/runlevels/default/zfs-zed" ]] || \
+		[[ -e "${EROOT}/etc/runlevels/default/zfs-zed" ]] ||
 			einfo "You should add zfs-zed to the default runlevel."
 	fi
 }

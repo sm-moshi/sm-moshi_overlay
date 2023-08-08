@@ -3,8 +3,8 @@
 
 EAPI=8
 
-PYTHON_COMPAT=(python3_{9..11} pypy3)
-DISTUTILS_USE_SETUPTOOLS=pyproject.toml
+PYTHON_COMPAT=(python3_{10..12} pypy3)
+DISTUTILS_USE_PEP517=pyproject.toml
 inherit distutils-r1 git-r3
 
 DESCRIPTION="Linux/OSX/FreeBSD resource monitor"
@@ -17,7 +17,7 @@ KEYWORDS="~amd64 ~ppc ~ppc64 ~riscv ~x86"
 IUSE="test"
 
 RDEPEND="
-	>=dev-python/psutil-5.7.1[${PYTHON_USEDEP}]
+	>=dev-python/psutil-5.9.4[${PYTHON_USEDEP}]
 "
 
 distutils_enable_tests pytest

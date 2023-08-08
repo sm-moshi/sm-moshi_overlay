@@ -17,7 +17,7 @@ SLOT="0"
 KEYWORDS="amd64 ~ppc ~ppc64 ~riscv ~x86"
 
 RDEPEND="
-	>=dev-python/psutil-5.7.1[${PYTHON_USEDEP}]
+	>=dev-python/psutil-5.9.4[${PYTHON_USEDEP}]
 "
 
 distutils_enable_tests pytest

@@ -1,7 +1,7 @@
 # Copyright 1999-2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=8
 
 inherit qmake-utils git-r3
 
@@ -13,7 +13,7 @@ LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~arm64 ~x86"
 
-IUSE_AVKYS=( alsa coreaudio ffmpeg gstreamer jack libuvc oss pulseaudio qtaudio v4lutils videoeffects )
+IUSE_AVKYS=(alsa coreaudio ffmpeg gstreamer jack libuvc oss pulseaudio qtaudio v4lutils videoeffects)
 IUSE="${IUSE_AVKYS[@]} debug headers v4l"
 
 REQUIRED_USE="v4lutils? ( v4l )"
@@ -58,10 +58,10 @@ src_configure() {
 		"NOWASAPI=1"
 	)
 
-	use v4l || myqmakeargs+=( "NOV4L2=1" )
+	use v4l || myqmakeargs+=("NOV4L2=1")
 
 	for x in ${IUSE_AVKYS[@]}; do
-		use ${x} || myqmakeargs+=( "NO${x^^}=1" )
+		use ${x} || myqmakeargs+=("NO${x^^}=1")
 	done
 
 	eqmake5 ${myqmakeargs[@]}

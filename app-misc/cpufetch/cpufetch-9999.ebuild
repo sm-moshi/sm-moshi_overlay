@@ -11,7 +11,7 @@ EGIT_REPO_URI="https://github.com/Dr-Noob/${PN}.git"
 S="${WORKDIR}/${PN}-${PV}"
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="~amd64 ~arm64"
+KEYWORDS=""
 
 src_prepare() {
 	default

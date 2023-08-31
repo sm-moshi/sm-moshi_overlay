@@ -15,13 +15,13 @@ SLOT="0"
 KEYWORDS="~amd64 ~arm64"
 
 src_prepare() {
-    default
-    tc-export CC
+default
+tc-export CC
 }
 
 src_install() {
-    dobin "${PN}"
-    doman "${PN}.1"
-    newdoc README.md README
-    dodoc -r doc/.
+dobin "${PN}"
+doman "${PN}.1"
+newdoc README.md README
+dodoc -r doc/.
 }

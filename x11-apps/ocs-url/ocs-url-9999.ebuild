@@ -1,7 +1,7 @@
 # Copyright 1999-2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=8
 
 inherit qmake-utils xdg
 
@@ -10,14 +10,13 @@ HOMEPAGE="https://opendesktop.org/p/1136805"
 if [[ ${PV} == 9999 ]]; then
 	inherit git-r3
 	SRC_URI=""
-	KEYWORDS=""
 	EGIT_REPO_URI="https://git.opendesktop.org/dfn2/${PN}.git"
 else
 	SRC_URI="https://git.opendesktop.org/akiraohgaki/${PN}/-/archive/release-${PV}/${PN}-release-${PV}.tar.bz2"
-	KEYWORDS="~amd64 ~arm ~arm64 ~x86"
 	S="${WORKDIR}/${PN}-release-${PV}"
 fi
 
+KEYWORDS=""
 LICENSE="GPL-3+"
 SLOT="0"
 IUSE=""

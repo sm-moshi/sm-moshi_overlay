@@ -1,2 +1,3 @@
 arm64 llvm-systemd-plasma dev
 arm64 llvm-systemd-twm dev
+arm64 musl-llvm-desktop dev

@@ -7,11 +7,22 @@ LLVM_MAX_SLOT="18"
 MY_PN="SPIRV-LLVM-Translator"
 MY_P="${MY_PN}-${PV}"
 
+if [[ ${PV} == *9999 ]]; then
+	inherit git-r3
+	EGIT_REPO_URI="https://github.com/KhronosGroup/SPIRV-LLVM-Translator.git"
+	RESTRICT="mirror fetch"
+else
+	SRC_URI="https://github.com/eth-p/bat-extras/archive/v${PV}.tar.gz -> ${P}.tar.gz"
+	KEYWORDS="~amd64 ~arm64 ~riscv ~x86"
+	RESTRICT="mirror test"
+fi
+
 inherit git-r3 cmake flag-o-matic llvm multiprocessing
 
 DESCRIPTION="Bi-directional translator between SPIR-V and LLVM IR"
 HOMEPAGE="https://github.com/KhronosGroup/SPIRV-LLVM-Translator"
 EGIT_REPO_URI="https://github.com/KhronosGroup/SPIRV-LLVM-Translator.git"
+
 S="${WORKDIR}/${MY_P}"
 
 LICENSE="UoI-NCSA"

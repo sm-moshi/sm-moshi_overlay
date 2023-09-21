@@ -15,8 +15,8 @@ SRC_URI="https://github.com/KhronosGroup/${MY_PN}/archive/v${PV}.tar.gz -> ${P}.
 S="${WORKDIR}/${MY_P}"
 
 LICENSE="UoI-NCSA"
-SLOT="$(ver_cut 1)"
-KEYWORDS="amd64 ~riscv ~x86"
+SLOT="${LLVM_MAX_SLOT}"
+KEYWORDS="amd64 ~arm64 ~riscv ~x86"
 IUSE="test"
 RESTRICT="!test? ( test )"
 

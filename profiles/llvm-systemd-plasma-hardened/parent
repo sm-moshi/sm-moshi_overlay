@@ -1,0 +1,3 @@
+gentoo:default/linux/arm64/23.0/hardened
+gentoo:default/linux/arm64/23.0/llvm/systemd
+gentoo:targets/desktop/plasma

@@ -4,7 +4,7 @@
 EAPI=8
 
 CONFIG_CHECK="~ADVISE_SYSCALLS"
-PYTHON_COMPAT=( python3_{10..12} )
+PYTHON_COMPAT=(python3_{10..12})
 PYTHON_REQ_USE="threads(+)"
 
 inherit bash-completion-r1 check-reqs flag-o-matic linux-info pax-utils python-any-r1 toolchain-funcs xdg-utils
@@ -39,7 +39,7 @@ RDEPEND=">=app-arch/brotli-1.0.9:=
 	>=net-libs/nghttp2-1.41.0:=
 	sys-libs/zlib
 	corepack? ( !sys-apps/yarn )
-	system-icu? ( >=dev-libs/icu-71:= )
+	system-icu? ( >=dev-libs/icu-73:= )
 	system-ssl? ( >=dev-libs/openssl-1.1.1:0= )
 	sys-devel/gcc:*"
 BDEPEND="${PYTHON_DEPS}
@@ -62,11 +62,11 @@ CHECKREQS_DISK_BUILD="22G"
 
 PATCHES=(
 	"${FILESDIR}"/"${PN}"-20.3.0-gcc14.patch
-	)
+)
 
 pkg_pretend() {
 	if [[ ${MERGE_TYPE} != "binary" ]]; then
-		if is-flagq "-g*" && ! is-flagq "-g*0" ; then
+		if is-flagq "-g*" && ! is-flagq "-g*0"; then
 			einfo "Checking for sufficient disk space and memory to build ${PN} with debugging CFLAGS"
 			check-reqs_pkg_pretend
 		fi
@@ -107,7 +107,7 @@ src_prepare() {
 	fi
 
 	# We need to disable mprotect on two files when it builds Bug 694100.
-	use pax-kernel && PATCHES+=( "${FILESDIR}"/${PN}-20.6.0-paxmarking.patch )
+	use pax-kernel && PATCHES+=("${FILESDIR}"/${PN}-20.6.0-paxmarking.patch)
 
 	default
 }
@@ -117,6 +117,12 @@ src_configure() {
 
 	# LTO compiler flags are handled by configure.py itself
 	filter-lto
+	# nodejs unconditionally links to libatomic #869992
+	# specifically it requires __atomic_is_lock_free which
+	# is not yet implemented by sys-libs/compiler-rt (see
+	# https://reviews.llvm.org/D85044?id=287068), therefore
+	# we depend on gcc and force using libgcc as the support lib
+	tc-is-clang && append-ldflags "--rtlib=libgcc --unwindlib=libgcc"
 
 	local myconf=(
 		--ninja
@@ -126,42 +132,42 @@ src_configure() {
 		--shared-nghttp2
 		--shared-zlib
 	)
-	use debug && myconf+=( --debug )
-	use lto && myconf+=( --enable-lto )
+	use debug && myconf+=(--debug)
+	use lto && myconf+=(--enable-lto)
 	if use system-icu; then
-		myconf+=( --with-intl=system-icu )
+		myconf+=(--with-intl=system-icu)
 	elif use icu; then
-		myconf+=( --with-intl=full-icu )
+		myconf+=(--with-intl=full-icu)
 	else
-		myconf+=( --with-intl=none )
+		myconf+=(--with-intl=none)
 	fi
-	use corepack || myconf+=( --without-corepack )
-	use inspector || myconf+=( --without-inspector )
-	use npm || myconf+=( --without-npm )
-	use snapshot || myconf+=( --without-node-snapshot )
+	use corepack || myconf+=(--without-corepack)
+	use inspector || myconf+=(--without-inspector)
+	use npm || myconf+=(--without-npm)
+	use snapshot || myconf+=(--without-node-snapshot)
 	if use ssl; then
-		use system-ssl && myconf+=( --shared-openssl --openssl-use-def-ca-store )
+		use system-ssl && myconf+=(--shared-openssl --openssl-use-def-ca-store)
 	else
-		myconf+=( --without-ssl )
+		myconf+=(--without-ssl)
 	fi
 
 	local myarch=""
 	case "${ARCH}:${ABI}" in
-		*:amd64) myarch="x64";;
-		*:arm) myarch="arm";;
-		*:arm64) myarch="arm64";;
-		loong:lp64*) myarch="loong64";;
-		riscv:lp64*) myarch="riscv64";;
-		*:ppc64) myarch="ppc64";;
-		*:x32) myarch="x32";;
-		*:x86) myarch="ia32";;
-		*) myarch="${ABI}";;
+	*:amd64) myarch="x64" ;;
+	*:arm) myarch="arm" ;;
+	*:arm64) myarch="arm64" ;;
+	loong:lp64*) myarch="loong64" ;;
+	riscv:lp64*) myarch="riscv64" ;;
+	*:ppc64) myarch="ppc64" ;;
+	*:x32) myarch="x32" ;;
+	*:x86) myarch="ia32" ;;
+	*) myarch="${ABI}" ;;
 	esac
 
 	GYP_DEFINES="linux_use_gold_flags=0
 		linux_use_bundled_binutils=0
 		linux_use_bundled_gold=0" \
-	"${EPYTHON}" configure.py \
+		"${EPYTHON}" configure.py \
 		--prefix="${EPREFIX}"/usr \
 		--dest-cpu=${myarch} \
 		"${myconf[@]}" || die
@@ -191,12 +197,12 @@ src_install() {
 
 	if use npm; then
 		keepdir /etc/npm
-		echo "NPM_CONFIG_GLOBALCONFIG=${EPREFIX}/etc/npm/npmrc" > "${T}"/50npm
+		echo "NPM_CONFIG_GLOBALCONFIG=${EPREFIX}/etc/npm/npmrc" >"${T}"/50npm
 		doenvd "${T}"/50npm
 
 		# Install bash completion for `npm`
 		local tmp_npm_completion_file="$(TMPDIR="${T}" mktemp -t npm.XXXXXXXXXX)"
-		"${ED}/usr/bin/npm" completion > "${tmp_npm_completion_file}"
+		"${ED}/usr/bin/npm" completion >"${tmp_npm_completion_file}"
 		newbashcomp "${tmp_npm_completion_file}" npm
 
 		# Move man pages
@@ -211,15 +217,15 @@ src_install() {
 		for match in "AUTHORS*" "CHANGELOG*" "CONTRIBUT*" "README*" \
 			".travis.yml" ".eslint*" ".wercker.yml" ".npmignore" \
 			"*.md" "*.markdown" "*.bat" "*.cmd"; do
-			find_name+=( ${find_exp} "${match}" )
+			find_name+=(${find_exp} "${match}")
 		done
 
 		# Remove various development and/or inappropriate files and
 		# useless docs of dependend packages.
 		find "${LIBDIR}"/node_modules \
 			\( -type d -name examples \) -or \( -type f \( \
-				-iname "LICEN?E*" \
-				"${find_name[@]}" \
+			-iname "LICEN?E*" \
+			"${find_name[@]}" \
 			\) \) -exec rm -rf "{}" \;
 	fi
 
